@@ -1,6 +1,6 @@
 import math, shutil, os, argparse
 from markovChain import MarkovChain
-
+from HMM import Viterbi
 def str2bool(v):
     if v.lower() in ("y", "yes", "true", "t", "1"):
         return True
@@ -29,7 +29,8 @@ def main():
         final_result = model.generate_final_result()
         print(final_result)
     if doHMM:
-
+        model = Viterbi(args.input_data_path)
+        model.load_input_data()#TODO
 if __name__ == "__main__":
     main()
     print("DONE")
