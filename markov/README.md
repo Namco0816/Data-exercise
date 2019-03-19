@@ -1,5 +1,5 @@
 #Markov Chain and Hidden Markov Model
-
+---
 A simple implementation and application of ***Markov Chain*** and ***Viterbi dp algorithm***
 ---
 
