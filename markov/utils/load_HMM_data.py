@@ -17,7 +17,7 @@ def load_hmm_data(data_path):
     transition_state_dict = dict(zip(transition_state_key, [float(i) for i in transition_list]))
 
     prob_symbol_list = new_list[2][2:]+new_list[3][2:]
-    prob_symbol_key = ['s1_A','s1_C','s1_T','s1_G','s2_A', 's2_C', 's2_T', 's2_G']
+    prob_symbol_key = ['s1_a','s1_c','s1_g','s1_t','s2_a', 's2_c', 's2_g', 's2_t']
     prob_symbol_dict = dict(zip(prob_symbol_key, [float(i) for i in prob_symbol_list]))
     return description_dict, initial_prob_dict, transition_state_dict, prob_symbol_dict
 
