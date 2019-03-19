@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description = "Markov Chain and Markov Hidden M
 parser.add_argument("--input_data_path", help = "path to processed data")
 parser.add_argument("--inside_model_path",help = 'path of the inside model' )
 parser.add_argument('--outside_model_path', help = 'path of the outside model')
+parser.add_argument("--hmm_info_path", help = 'path of the HMM infomation')
 parser.add_argument("--markov_chain", type = str2bool, nargs = '?', const = True, default = False, help = "start the markov chain model")
 parser.add_argument("--markov_hidden", type = str2bool, nargs = "?", const = True, default = False, help = "start the hidden markov model")
 args = parser.parse_args()
@@ -30,7 +31,11 @@ def main():
         print(final_result)
     if doHMM:
         model = Viterbi(args.input_data_path)
-        model.load_input_data()#TODO
+        model.load_input_data(args.hmm_info_path)
+        data_len = model.get_len()
+        for i in range(0,data_len):
+            model.update()
+        model.gen_result()
 if __name__ == "__main__":
     main()
     print("DONE")
