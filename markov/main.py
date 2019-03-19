@@ -30,8 +30,8 @@ def main():
         final_result = model.generate_final_result()
         print(final_result)
     if doHMM:
-        model = Viterbi(args.input_data_path)
-        model.load_input_data(args.hmm_info_path)
+        model = Viterbi(args.hmm_info_path)
+        model.load_input_data(args.input_data_path)
         data_len = model.get_len()
         for i in range(0,data_len):
             model.update()
