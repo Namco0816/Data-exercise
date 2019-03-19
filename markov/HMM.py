@@ -43,7 +43,6 @@ class Viterbi(object):
             # self.current_s1_score = max(self.previous_s1_score * self.transition_state.get("s1_2_s1")*self.s1_symbol_prob,self.previous_s1_score * self.transition_state.get("s2_2_s1")* self.s1_symbol_prob)
             # self.current_s2_score = max(self.previous_s2_score * self.transition_state.get("s2_2_s2")*self.s2_symbol_prob,self.previous_s1_score * self.transition_state.get("s1_2_s2")* self.s2_symbol_prob)
 
-        #TODO something to store the data
         self.index+=1
         self.previous_s1_score = self.current_s1_score
         self.previous_s2_score = self.current_s2_score
