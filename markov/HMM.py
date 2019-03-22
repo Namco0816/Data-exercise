@@ -57,12 +57,14 @@ class Viterbi(object):
         else:
             flag = 's2'
         for i in range(self.index, 0,-1):
+            if i == 1:
+                print("the data index which bigger than 0 are with the {} state".format(flag))
             if flag =='s1':
                 path = self.s1_node_recorder['step_%d'%i].get("previous")
                 if path =='s1':
                     continue
                 if path =='s2':
-                    print(i, flag)
+                    print("the data index which bigger than {} are with the {} state".format(i, flag))
                     flag = 's2'
                     continue
             if flag =='s2':
@@ -70,8 +72,7 @@ class Viterbi(object):
                 if path =='s2':
                     continue
                 if path =='s1':
-                    print(i, flag)
+                    print("the data index which bigger than {} are with the {} state".format(i, flag))
                     flag ='s1'
                     continue
-
 
