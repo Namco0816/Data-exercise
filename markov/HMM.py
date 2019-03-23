@@ -65,6 +65,7 @@ class Viterbi(object):
         return len(self.new_data)
 
     def gen_result(self):
+        seg_count = 0
         self.index = self.index - 1
         flag = None
         if self.s1_node_recorder['step_%d'%self.index].get('score')>self.s2_node_recorder['step_%d'%self.index].get('score'):
@@ -81,6 +82,7 @@ class Viterbi(object):
                 if path =='s2':
                     print("the data index which bigger than {} are with the {} state".format(i, flag))
                     flag = 's2'
+                    seg_count += 1
                     continue
             if flag =='s2':
                 path = self.s2_node_recorder["step_%d"%i].get('previous')
@@ -90,4 +92,4 @@ class Viterbi(object):
                     print("the data index which bigger than {} are with the {} state".format(i, flag))
                     flag ='s1'
                     continue
-
+        print(seg_count, "segments of state s2 ")
