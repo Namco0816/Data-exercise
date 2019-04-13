@@ -9,7 +9,9 @@ import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
 import torch.nn.functional as F
+
 from mnistModel import MnistModel
+from mnistSvmModel import MnistSvmModel
 
 def str2bool(v):
     if v.lower() in ('y', 'yes', 'true', 't', '1'):
@@ -23,6 +25,7 @@ parser = argparse.ArgumentParser(description = 'Mnist model with only linear lay
 parser.add_argument('--test_mode', type = str2bool, nargs = '?', const = True, default = 'False', help = 'set true to start quick test')
 parser.add_argument('--reset', type = str2bool, nargs = '?', const = True, default = 'False', help = 'set true to reset the weights')
 parser.add_argument('--epochs', type = int,default = 100, help = 'the training epochs')
+parser.add_argument('--model', type = str, default = 'ann', help = 'choose a model between ann and svm')
 args = parser.parse_args()
 
 doLoad = not args.reset
@@ -43,7 +46,14 @@ count_test = 0
 
 def main():
     global args, best_prec1, prec1
-    model = MnistModel()
+    if args.model.lower() == 'ann':
+        model = MnistModel()
+        critirion = nn.NLLLoss()
+    elif args.model.lower() == 'svm':
+        model = MnistSvmModel()
+        critirion = nn.MSELoss()
+    else:
+        return ('invalid input of the choice of svm and ann, please type --model [CHOICE of THE MODEL] to initialize a model')
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.to(device)
 
@@ -86,7 +96,6 @@ def main():
                                              num_workers = workers,
                                              pin_memory = True)
 
-    critirion = nn.NLLLoss()
 
     optimizer = torch.optim.Adam(model.parameters(),
                                  lr,)
@@ -117,8 +126,10 @@ def train(train_loader, model, device, critirion, optimizer, epoch):
         data_time.update(time.time() - end)
 
         image = image.to(device)
-        image_label = image_label.to(device)
-
+        if args.model == "svm":
+            image_label = image_label.to(device).float()
+        else:
+            image_label = image_label.to(device)
         output = model(image)
         loss = critirion(output, image_label)
 
@@ -150,13 +161,17 @@ def validate(val_loader, model, device, critirion, epoch):
         data_time.update(time.time() - end)
 
         image = image.to(device)
-        image_label = image_label.to(device)
-
+        if args.model == 'ann':
+            image_label = image_label.to(device)
+        else:
+            image_label = image_label.to(device).float()
         with torch.no_grad():
             output = model(image)
 
-        pred = output.argmax(dim = 1, keepdim = True)
-
+        if args.model.lower() =='ann':
+            pred = output.argmax(dim = 1, keepdim = True)
+        else:
+            pred = output
         loss = critirion(output, image_label)
 
         losses.update(loss.data.item(), image.size(0))
