@@ -5,7 +5,6 @@ For the platform **without GPU**, please use `conda install pytorch-cpu torchvis
 - Developed by using Python 3.6
 - Both the SVM and the ANN model are ***GPU accelerate available***
 - Author: Tan Haochen
-- Student ID: 55349692
 - Do training:
 `python main.py --model [CHOOSE FROM ann AND svm] --reset [False to READ THE CHECKPOINT] --epochs [ROUNDS OF TRAINING]`
 **NOTE**: if epochs>30 rounds, please fix the learning rate adjust strategy from fix the learning rate every 5 epochs to fix the learning rate every 30 epochs.
