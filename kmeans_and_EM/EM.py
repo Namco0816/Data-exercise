@@ -32,23 +32,22 @@ class EM:
         M_step_std = np.sum(E_step*(self.sorted_data - self.mean_array)**2, axis = 1)/np.sum(E_step, axis =1)
         M_step_weight = (1/len(self.sorted_data)) * np.sum(E_step, axis = 1)
 
-        if (abs(self.weight_array - M_step_weight)<0.000000001).any() and (abs(self.mean_array == M_step_mean)<0.00000000001).any():
+        if (abs(self.weight_array - M_step_weight)<0.001).any() and (abs(self.mean_array == M_step_mean)<0.001).any():
             return('over')
         self.mean_array = M_step_mean.reshape(-1,1).copy()
         self.std_array = M_step_std.reshape(-1,1).copy()
         self.weight_array = M_step_weight.reshape(-1,1).copy()
 
-        print(self.mean_array)
     def start_iter(self, iter_count):
         class_key_list = []
         data_group_list = []
         for i in range(iter_count):
             iter_flag = self.compute_prob()
             if iter_flag == 'over':
-                print("AFTER {}'S ROUNDS OF PROCESS, THE ALGORITHM CONVERGES, STOP CLUSTERING".format(i))
+                print("AFTER {}'S ROUNDS OF PROCESS, THE ALGORITHM CONVERGES, STOP CLUSTERING\t" .format(i))
                 break
             if iter_flag =='bad_k':
-                print("AFTER {}'S ROUNDS OF ITERATION THE PROCESS STOPPED DUE TO THE BAD INITIALIZE OF K, TRY DECREASE THE VALUE OF K TO GET BETTER RESULT")
+                print("AFTER {}'S ROUNDS OF ITERATION THE PROCESS STOPPED DUE TO THE BAD INITIALIZE OF K, TRY DECREASE THE VALUE OF K TO GET BETTER RESULT\t")
                 break
         prob_index_list = np.argmax(self.prob_matrix, axis = 0)
         class_dict = dict(zip(range(len(self.sorted_data)), prob_index_list))

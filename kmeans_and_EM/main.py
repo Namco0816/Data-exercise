@@ -29,7 +29,7 @@ def main():
         cluster = EM(k = args.k, data = data)
     result = cluster.start_iter(args.iter_rounds)
     for i in range(0, args.k):
-        print('GROUPS NO.{}: '.format(i+1), result[i], '\t')
+        print('GROUPS NO.{}: '.format(i+1), result[i], '\t\n' )
 if __name__ =='__main__':
     main()
     print ('DONE')
