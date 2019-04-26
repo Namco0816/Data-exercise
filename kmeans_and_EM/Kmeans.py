@@ -33,7 +33,7 @@ class Kmeans:
         self.class_dict = dict(zip(index_list, class_list))
         for i in range(0, self.k):
            group_key_list.append([key for key,value in self.class_dict.items() if value ==i])
-           self.group_list.append(self.data[group_key_list[i]])
+           self.group_list.append(self.data[group_key_list[i]].tolist())
            if len(self.group_list[i]) == 0:
                continue
            self.k_point_array[i] = sum(self.group_list[i])/len(self.group_list[i])
