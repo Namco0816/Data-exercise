@@ -14,4 +14,6 @@ The ***HMM(dynamic planning, Viterbi)*** and the ***markov chain*** solution of 
 
 The ***ANN*** solution of the MNIST dataset, see [PYTORCH IMPLEMENTATION of ANN](https://github.com/Namco0816/Data-exercise/tree/master/mnist)
 
+The ***K-means*** and ***EM for GMM** solution, see [K-MEANS and EM_GMM](https://github.com/Namco0816/Data-exercise/tree/master/kmeans_and_EM)
+
 @Author: Tan Haochen
